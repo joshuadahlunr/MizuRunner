@@ -1,0 +1,6 @@
+[submodule "mizuvm"]
+	path = mizuvm
+	url = https://github.com/joshuadahlunr/mizuvm
+[submodule "argparse"]
+	path = argparse
+	url = https://github.com/morrisfranken/argparse.git
