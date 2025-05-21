@@ -1,3 +1,5 @@
+![Mizu's Mascot](https://github.com/joshuadahlunr/MizuVM/blob/main/docs/mizu.svg)
+
 # MizuRunner
 
 [![Unlicensed](https://flat.badgen.net/github/license/joshuadahlunr/mizurunner)](https://github.com/joshuadahlunr/MizuRunner/blob/main/LICENSE) [![Latest Release](https://flat.badgen.net/github/release/joshuadahlunr/mizurunner)](https://github.com/joshuadahlunr/MizuRunner/releases) <!-- ![Checks](https://flat.badgen.net/github/checks/joshuadahlunr/mizurunner) -->

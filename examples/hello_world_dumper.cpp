@@ -6,13 +6,9 @@
 #include <fstream>
 
 fp::string message = "Hello 世界\n";
-#ifdef _WIN32
-fp::string libc = "msvcrt";
-#elifdef __linux
-fp::string libc = "libc.so.6";
-#else
-fp::string libc = "libc";
-#endif
+fp::string libc_windows = "msvcrt";
+fp::string libc_linux = "libc.so.6";
+auto libc = fp::builder::string{} << libc_windows << '\0' << libc_linux << '\0' << "libc";
 auto strings = fp::builder::string{} << libc << '\0' << "printf" << '\0' << message << '\0';
 
 MIZU_MAIN() {
@@ -23,8 +19,12 @@ MIZU_MAIN() {
 
 		// t0 = libc
 		opcode{load_immediate, t(0)}.set_immediate(strings.size()),
-		opcode{unsafe::pointer_to_stack_bottom, t(0), t(0)},
-		opcode{ffi::load_library, t(0), t(0)},
+		opcode{unsafe::pointer_to_stack_bottom, a(0), t(0)},
+		opcode{load_immediate, t(0)}.set_immediate(strings.size() - libc_windows.size() - 1),
+		opcode{unsafe::pointer_to_stack_bottom, a(1), t(0)},
+		opcode{load_immediate, t(0)}.set_immediate(strings.size() - libc_windows.size() - libc_linux.size() - 2),
+		opcode{unsafe::pointer_to_stack_bottom, a(2), t(0)},
+		opcode{ffi::load_first_library_that_exists, t(0)}.set_immediate(3),
 		// t1 = printf
 		opcode{load_immediate, t(1)}.set_immediate(strings.size() - libc.size() - 1),
 		opcode{unsafe::pointer_to_stack_bottom, t(1), t(1)},
